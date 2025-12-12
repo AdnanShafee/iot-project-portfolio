@@ -21,7 +21,7 @@ and real-time cloud-connected devices.
 ### 🌱 Solar-Powered Irrigation Monitoring System
 ESP32-based smart irrigation system with real-time monitoring of soil, nutrients,
 and motor electrical parameters.  
-📄 [View Project Details](projects/solar-irrigation.md)
+📄 [View Project Details](solar-irrigation.md)
 
 ---
 
