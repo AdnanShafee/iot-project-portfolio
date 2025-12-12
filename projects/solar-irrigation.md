@@ -119,35 +119,5 @@ RTC-based accurate time display
 ## Working Flow of the Project
 When the system is powered ON using a solar or AC-DC supply, the ESP32 initializes and synchronizes the current date and time using the DS3231 real-time clock. All sensors and modules—including soil moisture and NPK sensors connected through the ADS1015 ADC, the groundwater level sensor, and the PZEM-004T energy meter—are then initialized. The ESP32 continuously acquires soil moisture, groundwater depth, and electrical parameters of the 5HP irrigation motor such as voltage, current, power, energy, frequency, and power factor. Based on the measured current, the system determines the motor ON/OFF state, tracks motor runtime, and counts daily activations. Using RTC data, daily runtime and counters are managed accurately, while total energy consumption and electricity cost are calculated. All processed data is sent in real time to the Arduino IoT Cloud, where it is visualized on the dashboard showing soil conditions, groundwater level, motor status, energy usage, cost, and runtime statistics, and this process runs continuously in a loop for real-time monitoring.
 
-```mermaid
-flowchart TD
-    A[Power ON / Solar Supply] --> B[Initialize ESP32 & RTC]
-    B --> C[Initialize Sensors & Modules]
-    
-    C --> D[Read Soil Moisture & NPK Sensors]
-    C --> E[Read Groundwater Level]
-    C --> F[Read PZEM Energy Meter]
-
-    F --> G{Current > Threshold?}
-    G -->|Yes| H[Motor ON]
-    G -->|No| I[Motor OFF]
-
-    H --> J[Start Runtime Timer]
-    I --> K[Stop Runtime Timer]
-
-    J --> L[Calculate Runtime & Activation Count]
-    K --> L
-
-    L --> M[Calculate Energy Consumption]
-    M --> N[Calculate Electricity Cost]
-
-    D --> O[Send Data to Arduino Cloud]
-    E --> O
-    F --> O
-    L --> O
-    N --> O
-
-    O --> P[Update Cloud Dashboard]
-    P --> Q[Repeat Loop]
-    Q --> D
-```
+Flowchart
+![Flowchart](images/Solar Pump Energy-2025-12-12-205110.png)
