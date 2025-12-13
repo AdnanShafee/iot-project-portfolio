@@ -18,15 +18,7 @@ It covers:
 - Real-time updates every 5 seconds
 
 ## Architecture Diagram
-```mermaid
-graph TD
-    A[ESP32 Device] -->|WiFi| B[WiFi Router]
-    B --> C[Firebase Authentication Service]
-    C --> D[Firebase Realtime Database]
-
-    A -->|Write Data| D
-    D -->|Read Data| A
-```
+![Interactio](images/Architecture_Diagram.png)
 # Firebase Data Structure Preview
 ```bash
 {
@@ -97,68 +89,7 @@ status = true
 ```
 ## Flow Diagram
 # ESP32 ↔ Firebase Interactio
+![Interactio](images/FirebasetoEsp32interaction.png)
 
-```mermaid
-sequenceDiagram
-    participant ESP32
-    participant WiFi
-    participant FirebaseAuth as Firebase Auth
-    participant RTDB as Firebase Realtime DB
-
-    ESP32->>WiFi: WiFi.begin(SSID, PASS)
-    WiFi-->>ESP32: Connected
-
-    ESP32->>FirebaseAuth: Anonymous Sign-Up Request
-    FirebaseAuth-->>ESP32: Token + Refresh Token
-
-    ESP32->>RTDB: Write randomValue
-    RTDB-->>ESP32: Write OK
-
-    ESP32->>RTDB: Write randomAnotherValue
-    RTDB-->>ESP32: Write OK
-
-    ESP32->>RTDB: Read Integer
-    RTDB-->>ESP32: Return Integer
-
-    ESP32->>RTDB: Read Float
-    RTDB-->>ESP32: Return Float
-
-    ESP32->>RTDB: Read Boolean
-    RTDB-->>ESP32: Return Bool
-
-    ESP32->>ESP32: Print Values
-    ESP32->>ESP32: Delay 5s → Repeat
-```
 ## ESP32 ↔ Firebase Realtime Database Flow Diagram
-```mermaid
-flowchart TD
-
-    A[ESP32 Bootup] --> B[Connect to WiFi]
-    B -->|Success| C[Initialize Firebase Config]
-    B -->|Fail| Z[Retry WiFi]
-
-    C --> D[Anonymous Firebase Sign Up]
-    D -->|Success| E[Firebase Ready]
-
-    E --> F[Generate Random Values]
-    F --> G[Write randomValue to Firebase]
-    F --> H[Write randomAnotherValue to Firebase]
-
-    G --> I[Write Success?]
-    H --> I
-
-    I -->|Yes| J[Read integer: sendData/randomAnotherValue]
-    I -->|Yes| K[Read float: sendData/randomValue]
-    I -->|Yes| L[Read boolean: sendData/status]
-
-    J --> M[Print integer to Serial]
-    K --> M
-    L --> M
-
-    M --> N[Delay 5 Seconds]
-    N --> E
-
-    I -->|Fail| Y[Print Error Message]
-```
-
-
+![Flow_Diagram](images/firebaseEsp32.png)
